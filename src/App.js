@@ -1,9 +1,10 @@
+import Simon from './components/Simon';
 import './App.css';
 
 function App() {
   return (
-    <div>
-      ciao
+    <div className='App'>
+      <Simon />
     </div>
   );
 }

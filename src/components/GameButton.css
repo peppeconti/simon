@@ -1,0 +1,5 @@
+.button {
+    border: .5rem solid #fff;
+    cursor: pointer;
+    caret-color: transparent;
+}
