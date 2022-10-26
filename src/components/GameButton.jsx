@@ -1,14 +1,14 @@
 import './GameButton.css';
 
-const GameButton = ({ TL, TR, BL, BR, color }) => {
+const GameButton = ({ border, color }) => {
 
   const buttonStyles = {
     backgroundColor: color,
-    borderRadius: `${TL ? TL : 0}px ${TR ? TR : 0}px ${BR ? BR : 0}px ${BL ? BL : 0}px`,
-    borderLeft: `${BR || TR ? '.5rem solid #fff' : 'none'}`,
-    borderTop: `${BL || BR ? '.5rem solid #fff' : 'none'}`,
-    borderRight: `${TL || BL ? '.5rem solid #fff' : 'none'}`,
-    borderBottom: `${TL || TR ? '.5rem solid #fff' : 'none'}`,
+    borderRadius: `${border === 'TL' ? 600 : 0}px ${border === 'TR' ? 600 : 0}px ${border === 'BR' ? 600 : 0}px ${border === 'BL' ? 600 : 0}px`,
+    borderLeft: `${border === 'BR' || border === 'TR' ? '.5rem solid #fff' : 'none'}`,
+    borderTop: `${border === 'BR' || border === 'BL' ? '.5rem solid #fff' : 'none'}`,
+    borderRight: `${border === 'TL' || border === 'BL' ? '.5rem solid #fff' : 'none'}`,
+    borderBottom: `${border === 'TL' || border === 'TR'? '.5rem solid #fff' : 'none'}`,
   }
 
   /*const absStyles = {

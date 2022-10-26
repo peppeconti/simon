@@ -1,3 +1,4 @@
+import React from 'react';
 import GameButton from './GameButton';
 import Control from './Control';
 import './Simon.css';
@@ -7,33 +8,25 @@ const Simon = () => {
   const GameButtons = [
     {
       color: '#ff0000',
-      TL: '600',
-      top: '-5%',
-      left: '-5%'
+      border: 'TL'
     },
     {
       color: '#297fb8',
-      TR: '600',
-      top: '-5%',
-      left: '5%'
+      border: 'TR'
     },
     {
       color: '#27ae61',
-      BL: '600',
-      top: '5%',
-      left: '-5%'
+      border: 'BL'
     },
     {
       color: '#f1c40f',
-      BR: '600',
-      top: '5%',
-      left: '5%'
+      border: 'BR'
     }
   ]
 
   return (
     <div className='board'>
-      {GameButtons.map((obj, i) => <GameButton key={i} className='button' color={obj.color} top={obj.top} left={obj.left} />)}
+      {GameButtons.map((e, i) => <GameButton key={i} color={e.color} border={e.border} />)}
       <Control />
     </div>
   );
