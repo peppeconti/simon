@@ -1,15 +1,14 @@
 .button {
-    border: .5rem solid #fff;
     cursor: pointer;
     caret-color: transparent;
     position: relative;
 }
 
-.button .active {
+/*.button .active {
     position: absolute;
     height: 100%;
     width: 100%;
     z-index: -1;
-    opacity: .5;
-    filter: blur(1rem);
-}
+    opacity: .3;
+    filter: blur(.25rem);
+}*/
