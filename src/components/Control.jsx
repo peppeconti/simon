@@ -1,9 +1,9 @@
 import './Control.css';
 
-const Control = () => {
+const Control = ({ start }) => {
   return (
     <div className='control'>
-      <h2>
+      <h2 onClick={() => start()}>
         START
       </h2>
     </div>
