@@ -5,6 +5,31 @@
     transform: translate(-50%, -50%);
     height: 40%;
     width: 40%;
-    background-color: #fff;
+    background-color: #3f3f3f;
     border-radius: 200px;
+    border: 1rem solid #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+.control h2 {
+    font-size: 3rem;
+    color: #fff;
+    font-weight: 100;
+    border: .25rem double #8a8a8a;
+    border-radius: inherit;
+    height: 95%;
+    width: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    animation: blinker 1.25s infinite;
+}
+
+@keyframes blinker {
+    50% {
+      color: transparent;
+    }
+  }
