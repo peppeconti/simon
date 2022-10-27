@@ -1,7 +1,7 @@
 import './GameButton.css';
 import { motion } from "framer-motion";
 
-const GameButton = ({ border, color, colors, id }) => {
+const GameButton = ({ border, color, last, id }) => {
 
   const buttonStyles = {
     backgroundColor: color,
@@ -12,9 +12,7 @@ const GameButton = ({ border, color, colors, id }) => {
     borderBottom: `${border === 'TL' || border === 'TR' ? '.5rem solid #fff' : 'none'}`,
   };
 
-  const lastColor = colors[colors.length - 1];
-
-  if (id === lastColor) {
+  if (id === last) {
     return <motion.div
       className='button'
       style={buttonStyles}

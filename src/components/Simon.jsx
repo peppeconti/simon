@@ -6,7 +6,8 @@ import './Simon.css';
 
 const initialState = {
   turn: 0,
-  colors: []
+  colors: [],
+  last: undefined
 };
 
 const reducer = (state, action) => {
@@ -15,6 +16,8 @@ const reducer = (state, action) => {
       return { ...state, turn: state.turn + 1 };
     case 'extract-button':
       return { ...state, colors: [...state.colors, action.color] };
+    case 'set-last':
+      return { ...state, last: action.last };
     default:
       return state
   }
@@ -53,13 +56,20 @@ const Simon = () => {
   };
 
   useEffect(() => {
-    console.log(state);
-  }, [state]);
+    if (state.turn) {
+      for (let i = 0; i < state.colors.length; i++) {
+        setTimeout(() => {
+          dispatch({ type: 'set-last', last: state.colors[i] });
+          console.log(state)
+        }, 2000)
+      }
+    }
+  }, [state.colors, state.last, state.turn]);
 
   return (
     <div className='board'>
-      {GameButtons.map((e, i) => <GameButton key={e.id} id={i} color={e.color} border={e.border} colors={state.colors} />)}
-      <Control start={start} />
+      {GameButtons.map((e, i) => <GameButton key={e.id} id={i} color={e.color} border={e.border} last={state.last} />)}
+      <Control start={start} turn={state.turn} />
     </div>
   );
 }
