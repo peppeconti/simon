@@ -3,12 +3,3 @@
     caret-color: transparent;
     position: relative;  
 }
-
-.bounce {
-    animation: bounce .7s 1 ease-in-out;
-}
-
-@keyframes bounce {
-    from { transform: scale(.95); opacity: .5; }
-    to { transform: scale(1); opacity: 1; }
-  }

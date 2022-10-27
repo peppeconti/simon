@@ -1,8 +1,7 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
 import './GameButton.css';
+import { motion } from "framer-motion";
 
-const GameButton = ({ border, color, className }) => {
+const GameButton = ({ border, color, colors, id }) => {
 
   const buttonStyles = {
     backgroundColor: color,
@@ -11,21 +10,24 @@ const GameButton = ({ border, color, className }) => {
     borderTop: `${border === 'BR' || border === 'BL' ? '.5rem solid #fff' : 'none'}`,
     borderRight: `${border === 'TL' || border === 'BL' ? '.5rem solid #fff' : 'none'}`,
     borderBottom: `${border === 'TL' || border === 'TR' ? '.5rem solid #fff' : 'none'}`,
+  };
+
+  const lastColor = colors[colors.length - 1];
+
+  if (id === lastColor) {
+    return <motion.div
+      className='button'
+      style={buttonStyles}
+      type='button'
+      initial={{ opacity: .5, scale: .95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.7 }}
+    />;
+  } else {
+    return <div className='button'
+      style={buttonStyles}
+      type='button' />;
   }
-
-  const [animated, setAnimated] = useState(true)
-
-  const removeClass = () => {
-    setAnimated(false);
-  }
-
-  useEffect(() => {
-    setAnimated(true);
-  },[animated])
-
-  return (
-    <div type='button' className={`button ${animated? className : 'none'}`} style={buttonStyles} onAnimationEnd={removeClass} />
-  );
 }
 
 export default GameButton;

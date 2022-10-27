@@ -1,6 +1,7 @@
 import { useReducer, useEffect } from 'react';
 import GameButton from './GameButton';
 import Control from './Control';
+import uuid from 'react-uuid';
 import './Simon.css';
 
 const initialState = {
@@ -12,7 +13,7 @@ const reducer = (state, action) => {
   switch (action.type) {
     case 'turn':
       return { ...state, turn: state.turn + 1 };
-    case 'extract':
+    case 'extract-button':
       return { ...state, colors: [...state.colors, action.color] };
     default:
       return state
@@ -24,19 +25,23 @@ const Simon = () => {
   const GameButtons = [
     {
       color: '#ff0000',
-      border: 'TL'
+      border: 'TL',
+      id: uuid()
     },
     {
       color: '#297fb8',
-      border: 'TR'
+      border: 'TR',
+      id: uuid()
     },
     {
       color: '#27ae61',
-      border: 'BL'
+      border: 'BL',
+      id: uuid()
     },
     {
       color: '#f1c40f',
-      border: 'BR'
+      border: 'BR',
+      id: uuid()
     }
   ];
 
@@ -44,16 +49,16 @@ const Simon = () => {
 
   const start = () => {
     dispatch({ type: 'turn' });
-    dispatch({ type: 'extract', color: Math.floor(Math.random() * 4) });
+    dispatch({ type: 'extract-button', color: Math.floor(Math.random() * 4) });
   };
 
   useEffect(() => {
     console.log(state);
-  }, [state])
+  }, [state]);
 
   return (
     <div className='board'>
-      {GameButtons.map((e, i) => <GameButton key={i} className={i === state.colors[state.colors.length -1]? 'bounce' : 'none'} color={e.color} border={e.border} />)}
+      {GameButtons.map((e, i) => <GameButton key={e.id} id={i} color={e.color} border={e.border} colors={state.colors} />)}
       <Control start={start} />
     </div>
   );
