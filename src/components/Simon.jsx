@@ -10,7 +10,7 @@ const initialState = {
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'start':
+    case 'turn':
       return { ...state, turn: state.turn + 1 };
     case 'extract':
       return { ...state, colors: [...state.colors, action.color] };
@@ -43,22 +43,17 @@ const Simon = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const start = () => {
-    dispatch({ type: 'start' });
-    const color = Math.floor(Math.random() * 3);
-    dispatch({ type: 'extract', color: color });
+    dispatch({ type: 'turn' });
+    dispatch({ type: 'extract', color: Math.floor(Math.random() * 4) });
   };
 
   useEffect(() => {
-    for (let i = 0; i < state.turn; i++) {
-      setTimeout(() => {
-        console.log(state.colors[i])
-      }, 1000)
-    }
+    console.log(state);
   }, [state])
 
   return (
     <div className='board'>
-      {GameButtons.map((e, i) => <GameButton key={i} color={e.color} border={e.border} />)}
+      {GameButtons.map((e, i) => <GameButton key={i} className={i === state.colors[state.colors.length -1]? 'bounce' : 'none'} color={e.color} border={e.border} />)}
       <Control start={start} />
     </div>
   );

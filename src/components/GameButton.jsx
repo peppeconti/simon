@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
+import { useState } from 'react';
 import './GameButton.css';
 
-const GameButton = ({ border, color }) => {
+const GameButton = ({ border, color, className }) => {
 
   const buttonStyles = {
     backgroundColor: color,
@@ -8,11 +10,21 @@ const GameButton = ({ border, color }) => {
     borderLeft: `${border === 'BR' || border === 'TR' ? '.5rem solid #fff' : 'none'}`,
     borderTop: `${border === 'BR' || border === 'BL' ? '.5rem solid #fff' : 'none'}`,
     borderRight: `${border === 'TL' || border === 'BL' ? '.5rem solid #fff' : 'none'}`,
-    borderBottom: `${border === 'TL' || border === 'TR'? '.5rem solid #fff' : 'none'}`,
+    borderBottom: `${border === 'TL' || border === 'TR' ? '.5rem solid #fff' : 'none'}`,
   }
 
+  const [animated, setAnimated] = useState(true)
+
+  const removeClass = () => {
+    setAnimated(false);
+  }
+
+  useEffect(() => {
+    setAnimated(true);
+  },[animated])
+
   return (
-    <div type='button' className='button' style={buttonStyles} />
+    <div type='button' className={`button ${animated? className : 'none'}`} style={buttonStyles} onAnimationEnd={removeClass} />
   );
 }
 
