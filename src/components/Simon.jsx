@@ -3,7 +3,6 @@ import GameButton from './GameButton';
 import Control from './Control';
 // import uuid from 'react-uuid';
 import './Simon.css';
-import uuid from 'react-uuid';
 
 const initialState = {
   turn: 0,
@@ -27,30 +26,26 @@ const Simon = () => {
     {
       color: '#ff0000',
       border: 'TL',
-      id: uuid(),
-      ref: useRef()
+      id: useId()
     },
     {
       color: '#297fb8',
       border: 'TR',
-      id: uuid(),
-      ref: useRef()
+      id: useId()
     },
     {
       color: '#27ae61',
       border: 'BL',
-      id: uuid(),
-      ref: useRef()
+      id: useId()
     },
     {
       color: '#f1c40f',
       border: 'BR',
-      id: uuid(),
-      ref: useRef()
+      id: useId()
     }
   ];
 
-  const gbRef = useRef(GameButtons);
+  const refs = useRef([])
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -60,19 +55,18 @@ const Simon = () => {
   };
 
   useEffect(() => {
-    for (let i = 0; i < state.colors.length; i++) {
+    state.colors.forEach((el, i) => {
       setTimeout(() => {
-        gbRef.current.forEach(e => e.ref.current.click(state.colors[i])
-        )
+        refs.current[el].click(el);
       }, 1000 * (i + 1));
-    }
+    })
   }, [state.colors])
 
 
 
   return (
     <div className='board'>
-      {GameButtons.map((e, i) => <GameButton ref={e.ref} key={e.id} id={i} color={e.color} border={e.border} />)}
+      {GameButtons.map((e, i) => <GameButton ref={(button) => {refs.current[i] = button}}  key={e.id} id={i} color={e.color} border={e.border} />)}
       <Control start={start} turn={state.turn} />
     </div>
   );

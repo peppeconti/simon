@@ -13,17 +13,21 @@ const GameButton = forwardRef(({ border, color, id }, ref) => {
     borderBottom: `${border === 'TL' || border === 'TR' ? '.5rem solid #fff' : 'none'}`,
   };
 
-  const [last, setLast] = useState(undefined);
+  const [animate, setAnimate] = useState(false);
 
 
   useImperativeHandle(ref, () => ({
     click(el) {
-      setLast(el);
-      console.log(el);
+      setAnimate(true);
+      console.log(el)
     }
   }), []);
 
-  if (id === last) {
+  const reset = () => {
+    setAnimate(false);
+  }
+
+  if (animate) {
     return <motion.div
       className='button'
       style={buttonStyles}
@@ -31,6 +35,7 @@ const GameButton = forwardRef(({ border, color, id }, ref) => {
       initial={{ opacity: .5, scale: .95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.7 }}
+      onAnimationComplete={reset}
     />;
   } else {
     return <div className='button'
