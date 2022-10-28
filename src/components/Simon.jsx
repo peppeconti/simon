@@ -57,7 +57,7 @@ const Simon = () => {
   useEffect(() => {
     state.colors.forEach((el, i) => {
       setTimeout(() => {
-        refs.current[el].click(el);
+        refs.current[el].animate(el);
       }, 1000 * (i + 1));
     })
   }, [state.colors])

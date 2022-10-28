@@ -13,21 +13,21 @@ const GameButton = forwardRef(({ border, color, id }, ref) => {
     borderBottom: `${border === 'TL' || border === 'TR' ? '.5rem solid #fff' : 'none'}`,
   };
 
-  const [animate, setAnimate] = useState(false);
+  const [animation, setAnimation] = useState(false);
 
 
   useImperativeHandle(ref, () => ({
-    click(el) {
-      setAnimate(true);
+    animate(el) {
+      setAnimation(true);
       console.log(el)
     }
   }), []);
 
   const reset = () => {
-    setAnimate(false);
+    setAnimation(false);
   }
 
-  if (animate) {
+  if (animation) {
     return <motion.div
       className='button'
       style={buttonStyles}
