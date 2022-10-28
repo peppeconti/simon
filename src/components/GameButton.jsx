@@ -1,6 +1,7 @@
 import { forwardRef, useImperativeHandle, useState } from 'react';
 import './GameButton.css';
 import { motion } from "framer-motion";
+import { audio_files } from '../audio/audio';
 
 const GameButton = forwardRef(({ border, color, id }, ref) => {
 
@@ -13,12 +14,14 @@ const GameButton = forwardRef(({ border, color, id }, ref) => {
     borderBottom: `${border === 'TL' || border === 'TR' ? '.5rem solid #fff' : 'none'}`,
   };
 
-  const [animation, setAnimation] = useState(false);
+  const audio = new Audio(audio_files[id]);
 
+  const [animation, setAnimation] = useState(false);
 
   useImperativeHandle(ref, () => ({
     animate(el) {
       setAnimation(true);
+      audio.play();
       console.log(el)
     }
   }), []);
