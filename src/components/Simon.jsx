@@ -1,9 +1,8 @@
-import { useReducer, useEffect } from 'react';
+import { useReducer, useEffect, useCallback } from 'react';
 import GameButton from './GameButton';
 import Control from './Control';
 import uuid from 'react-uuid';
 import './Simon.css';
-import { useCallback } from 'react';
 
 const initialState = {
   turn: 0,
