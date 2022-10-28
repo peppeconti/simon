@@ -56,7 +56,7 @@ const Simon = () => {
 
   const setDelay = useCallback((el) => {
     setTimeout(() => {
-      ref.current.dd(el)
+      ref.current.click(el);
     }, 2000);
   }, [])
 
