@@ -3,6 +3,7 @@ import GameButton from './GameButton';
 import Control from './Control';
 import uuid from 'react-uuid';
 import './Simon.css';
+import { useCallback } from 'react';
 
 const initialState = {
   turn: 0,
@@ -52,15 +53,19 @@ const Simon = () => {
     dispatch({ type: 'extract-button', color: Math.floor(Math.random() * 4) });
   };
 
+  const setDelay = useCallback((el) => {
+    setTimeout(() => {
+      console.log(el);
+    }, 2000);
+  }, [])
+
+ 
+
   useEffect(() => {
-    if (state.turn) {
-      state.colors.forEach(el => {
-        setTimeout(() => {
-          console.log(el)
-        }, 2000)
-      });
+    for (let i = 0; i < state.colors.length; i++) {
+      setDelay(i)
     }
-  }, [state.colors, state.last, state.turn]);
+  }, [state.colors, setDelay]);
 
   return (
     <div className='board'>
