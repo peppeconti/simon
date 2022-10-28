@@ -1,4 +1,4 @@
-import { useReducer, useRef, useEffect, useId } from 'react';
+import { useReducer, useRef, useEffect } from 'react';
 import GameButton from './GameButton';
 import Control from './Control';
 // import uuid from 'react-uuid';
@@ -62,10 +62,12 @@ const Simon = () => {
   useEffect(() => {
     for (let i = 0; i < state.colors.length; i++) {
       setTimeout(() => {
-        gbRef.current[state.colors[i]].ref.current.click(state.colors[i]);
+        gbRef.current.forEach(e => e.ref.current.click(state.colors[i]))
       }, 1000 * (i + 1));
     }
   }, [state.colors])
+
+
 
   return (
     <div className='board'>
