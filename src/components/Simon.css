@@ -1,3 +1,12 @@
 .board {
+    aspect-ratio: 1/1;
+    height: 70vh;
+    max-width: 80vw;
+    max-height: 80vw;
+    border-radius: 600px;
+    display: grid;
+    padding: .5rem;
+    grid-template-columns: repeat(2, 1fr);
+    caret-color: transparent;
     position: relative;
 }
