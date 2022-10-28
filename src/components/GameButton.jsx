@@ -13,15 +13,13 @@ const GameButton = forwardRef(({ border, color, id }, ref) => {
     borderBottom: `${border === 'TL' || border === 'TR' ? '.5rem solid #fff' : 'none'}`,
   };
 
-  const [last, setLast] = useState(undefined);
-
+  const [last, setLast] = useState();
 
   useImperativeHandle(ref, () => ({
     click(el) {
-      setLast(el);
-      console.log(last)
+      console.log(el)
     }
-  }), [last]);
+  }), []);
 
   if (id === last) {
     return <motion.div
