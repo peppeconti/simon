@@ -13,16 +13,18 @@ const GameButton = forwardRef(({ border, color, id }, ref) => {
     borderBottom: `${border === 'TL' || border === 'TR' ? '.5rem solid #fff' : 'none'}`,
   };
 
-  const [last, setLast] = useState();
+  const [last, setLast] = useState(undefined);
 
   useImperativeHandle(ref, () => ({
     click(el) {
+      setLast(el);
       console.log(el)
     }
   }), []);
 
   if (id === last) {
     return <motion.div
+      id={id}
       className='button'
       style={buttonStyles}
       type='button'
@@ -31,7 +33,9 @@ const GameButton = forwardRef(({ border, color, id }, ref) => {
       transition={{ duration: 0.7 }}
     />;
   } else {
-    return <div className='button'
+    return <div
+      id={id}
+      className='button'
       style={buttonStyles}
       type='button' />;
   }

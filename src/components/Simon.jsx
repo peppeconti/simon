@@ -1,12 +1,13 @@
-import { useReducer, useRef } from 'react';
+import { useReducer, useRef, useEffect, useId } from 'react';
 import GameButton from './GameButton';
 import Control from './Control';
-import uuid from 'react-uuid';
+// import uuid from 'react-uuid';
 import './Simon.css';
+import uuid from 'react-uuid';
 
 const initialState = {
   turn: 0,
-  colors: [0, 1, 2, 3, 0, 1, 2, 3]
+  colors: []
 };
 
 const reducer = (state, action) => {
@@ -26,47 +27,49 @@ const Simon = () => {
     {
       color: '#ff0000',
       border: 'TL',
-      id: uuid()
+      id: uuid(),
+      ref: useRef()
     },
     {
       color: '#297fb8',
       border: 'TR',
-      id: uuid()
+      id: uuid(),
+      ref: useRef()
     },
     {
       color: '#27ae61',
       border: 'BL',
-      id: uuid()
+      id: uuid(),
+      ref: useRef()
     },
     {
       color: '#f1c40f',
       border: 'BR',
-      id: uuid()
+      id: uuid(),
+      ref: useRef()
     }
   ];
 
-  const ref = useRef();
+  const gbRef = useRef(GameButtons);
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const setDelay = (el) => {
-    setTimeout(() => {
-      // ref.current.click(el);
-      console.log(el)
-    }, 2000);
-  }
-
   const start = () => {
     dispatch({ type: 'turn' });
-    //dispatch({ type: 'extract-button', color: Math.floor(Math.random() * 4) });
-    for (let i = 0; i < state.colors.length; i++) {
-      setDelay(state.colors[i])
-    }
+    dispatch({ type: 'extract-button', color: Math.floor(Math.random() * 4) });
   };
+
+  useEffect(() => {
+    for (let i = 0; i < state.colors.length; i++) {
+      setTimeout(() => {
+        gbRef.current[state.colors[i]].ref.current.click(state.colors[i]);
+      }, 1000 * (i + 1));
+    }
+  }, [state.colors])
 
   return (
     <div className='board'>
-      {GameButtons.map((e, i) => <GameButton ref={ref} key={e.id} id={i} color={e.color} border={e.border} />)}
+      {GameButtons.map((e, i) => <GameButton ref={e.ref} key={e.id} id={i} color={e.color} border={e.border} />)}
       <Control start={start} turn={state.turn} />
     </div>
   );
