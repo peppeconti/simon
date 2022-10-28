@@ -44,14 +44,12 @@ const GameButton = forwardRef(({ border, color, id }, ref) => {
       animate={{ opacity: 1, scale: 1 }}
       transition={{ ease: "easeOut", duration: .7 }}
       onAnimationComplete={resetAnimation}
-      onClick={startAnimation}
     />;
   } else {
     return <div
       className='button'
       style={buttonStyles}
       type='button'
-      onAnimationComplete={resetAnimation}
       onClick={startAnimation} />;
   }
 })
