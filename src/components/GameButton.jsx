@@ -1,7 +1,9 @@
+import { forwardRef, useImperativeHandle, useState } from 'react';
 import './GameButton.css';
 import { motion } from "framer-motion";
+import { useEffect } from 'react';
 
-const GameButton = ({ border, color, last, id }) => {
+const GameButton = forwardRef(({ border, color, id }, ref) => {
 
   const buttonStyles = {
     backgroundColor: color,
@@ -11,6 +13,18 @@ const GameButton = ({ border, color, last, id }) => {
     borderRight: `${border === 'TL' || border === 'BL' ? '.5rem solid #fff' : 'none'}`,
     borderBottom: `${border === 'TL' || border === 'TR' ? '.5rem solid #fff' : 'none'}`,
   };
+
+  const [last, setLast] = useState(null);
+
+  useImperativeHandle(ref, () => ({
+    dd(arg) {
+      setLast(arg);
+    }
+  }))
+
+  useEffect(() => {
+    console.log(last)
+  }, [last])
 
   if (id === last) {
     return <motion.div
@@ -26,6 +40,6 @@ const GameButton = ({ border, color, last, id }) => {
       style={buttonStyles}
       type='button' />;
   }
-}
+})
 
 export default GameButton;

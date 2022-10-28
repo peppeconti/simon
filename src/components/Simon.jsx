@@ -1,4 +1,4 @@
-import { useReducer, useEffect, useCallback } from 'react';
+import { useReducer, useEffect, useCallback, useRef } from 'react';
 import GameButton from './GameButton';
 import Control from './Control';
 import uuid from 'react-uuid';
@@ -45,6 +45,8 @@ const Simon = () => {
     }
   ];
 
+  const ref = useRef();
+
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const start = () => {
@@ -54,21 +56,19 @@ const Simon = () => {
 
   const setDelay = useCallback((el) => {
     setTimeout(() => {
-      console.log(el);
+      ref.current.dd(el)
     }, 2000);
   }, [])
 
- 
-
   useEffect(() => {
     for (let i = 0; i < state.colors.length; i++) {
-      setDelay(i)
+      setDelay(state.colors[i]);
     }
   }, [state.colors, setDelay]);
 
   return (
     <div className='board'>
-      {GameButtons.map((e, i) => <GameButton key={e.id} id={i} color={e.color} border={e.border} />)}
+      {GameButtons.map((e, i) => <GameButton ref={ref} key={e.id} id={i} color={e.color} border={e.border} />)}
       <Control start={start} turn={state.turn} />
     </div>
   );
