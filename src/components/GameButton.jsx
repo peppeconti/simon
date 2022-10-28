@@ -1,4 +1,4 @@
-import { forwardRef, useImperativeHandle, useState } from 'react';
+import { forwardRef, useImperativeHandle, useState, useMemo } from 'react';
 import './GameButton.css';
 import { motion } from "framer-motion";
 import { audio_files } from '../audio/audio';
@@ -14,9 +14,18 @@ const GameButton = forwardRef(({ border, color, id }, ref) => {
     borderBottom: `${border === 'TL' || border === 'TR' ? '.5rem solid #fff' : 'none'}`,
   };
 
-  const audio = new Audio(audio_files[id]);
+  const audio = useMemo(() => new Audio(audio_files[id]),[id])
 
   const [animation, setAnimation] = useState(false);
+
+  const startAnimation = () => {
+    setAnimation(true);
+    audio.play();
+  }
+
+  const resetAnimation = () => {
+    setAnimation(false);
+  }
 
   useImperativeHandle(ref, () => ({
     animate(el) {
@@ -24,26 +33,26 @@ const GameButton = forwardRef(({ border, color, id }, ref) => {
       audio.play();
       console.log(el)
     }
-  }), []);
-
-  const reset = () => {
-    setAnimation(false);
-  }
+  }), [audio]);
 
   if (animation) {
     return <motion.div
       className='button'
       style={buttonStyles}
       type='button'
-      initial={{ opacity: .5, scale: .95 }}
+      initial={{ opacity: .5, scale: .9 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.7 }}
-      onAnimationComplete={reset}
+      transition={{ ease: "easeOut", duration: .7 }}
+      onAnimationComplete={resetAnimation}
+      onClick={startAnimation}
     />;
   } else {
-    return <div className='button'
+    return <div
+      className='button'
       style={buttonStyles}
-      type='button' />;
+      type='button'
+      onAnimationComplete={resetAnimation}
+      onClick={startAnimation} />;
   }
 })
 
