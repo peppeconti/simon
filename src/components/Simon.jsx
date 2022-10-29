@@ -1,4 +1,4 @@
-import { useReducer, useRef, useEffect, useId } from 'react';
+import { useReducer, useRef, useLayoutEffect, useId } from 'react';
 import GameButton from './GameButton';
 import Control from './Control';
 import audio_error from '../audio/error.mp3';
@@ -87,12 +87,13 @@ const Simon = () => {
     }
   }
 
-  useEffect(() => {
-    for (let i = 0; i < state.sequence.length + 1; i++) {
+  useLayoutEffect(() => {
+    for (let i = 0; i < state.sequence.length; i++) {
       setTimeout(() => {
-        i < state.sequence.length ? refs.current[state.sequence[i]].animate() : dispatch({ type: 'switch-player' });
+        refs.current[state.sequence[i]].animate();
       }, 1000 * (i + 1));
     }
+    dispatch({ type: 'switch-player' })
   }, [state.sequence])
 
   return (
