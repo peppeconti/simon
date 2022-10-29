@@ -3,7 +3,7 @@ import './GameButton.css';
 import { motion } from "framer-motion";
 import { audio_files } from '../audio/audio';
 
-const GameButton = forwardRef(({ border, color, id, player }, ref) => {
+const GameButton = forwardRef(({ border, color, id, player, checkPlayer }, ref) => {
 
   const buttonStyles = {
     backgroundColor: color,
@@ -22,6 +22,7 @@ const GameButton = forwardRef(({ border, color, id, player }, ref) => {
     if (player) {
       setAnimation(true);
       audio.play();
+      checkPlayer(id);
     }
   }
 

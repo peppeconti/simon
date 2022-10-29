@@ -7,7 +7,10 @@ import './Simon.css';
 const initialState = {
   round: 0,
   colors: [],
-  player: false,
+  player: {
+    active: false,
+    check: 0
+  },
   gameOver: false
 };
 
@@ -18,7 +21,9 @@ const reducer = (state, action) => {
     case 'extract-button':
       return { ...state, colors: [...state.colors, action.color] };
     case 'switch-player':
-      return { ...state, player: !state.player };
+      return { ...state, player: { active: !state.player.active, check: 0 } };
+    case 'player-go-on':
+      return { ...state, player: { ...state.player, check: state.player.check + 1 } };
     case 'game-over':
       return { ...state, gameOver: true };
     default:
@@ -60,8 +65,26 @@ const Simon = () => {
     dispatch({ type: 'extract-button', color: Math.floor(Math.random() * 4) });
   };
 
-  const checkPlayer = () => {
+  const error = new Audio(audio_error);
 
+  const checkPlayer = (button) => {
+    if (state.player.active) {
+
+      if (button === state.colors[state.player.check]) {
+        if (state.player.check + 1 === state.colors.length) {
+          dispatch({ type: 'switch-player' });
+          dispatch({ type: 'round' });
+          dispatch({ type: 'extract-button', color: Math.floor(Math.random() * 4) });
+        } else {
+          dispatch({ type: 'player-go-on' });
+        }
+      } else if (button !== state.colors[state.player.check]) {
+        dispatch({ type: 'game-over' });
+        dispatch({ type: 'switch-player' });
+        error.play();
+      }
+
+    }
   }
 
   useEffect(() => {
@@ -75,8 +98,8 @@ const Simon = () => {
 
   return (
     <div className='board'>
-      {GameButtons.map((e, i) => <GameButton ref={(button) => { refs.current[i] = button }} key={e.id} id={i} color={e.color} border={e.border} player={state.player} />)}
-      <Control start={start} round={state.round} />
+      {GameButtons.map((e, i) => <GameButton ref={(button) => { refs.current[i] = button }} key={e.id} id={i} color={e.color} border={e.border} player={state.player.active} checkPlayer={checkPlayer} />)}
+      <Control start={start} round={state.round} gameOver={state.gameOver} />
     </div>
   );
 }

@@ -1,15 +1,24 @@
 import './Control.css';
 
-const Control = ({ start, round }) => {
+const Control = ({ start, round, gameOver }) => {
 
   const startGame = () => {
     start();
   }
 
+  let button;
+
+  if (gameOver) {
+    button = <h2 className='game'>Game<br/>Over</h2>
+  } else if (round === 0) {
+    button = <h2 className='start' onClick={startGame}>START</h2>
+  } else if (round !== 0) {
+    button = <h2 className='game'>Round {round}</h2>
+  }
+
   return (
     <div className='control' >
-        {round === 0 && <h2 className='start' onClick={startGame}>START</h2>}
-        {round !== 0 && <h2 className='game'>Round {round}</h2>}
+      {button}
     </div>
   );
 }
