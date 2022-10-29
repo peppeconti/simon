@@ -19,9 +19,9 @@ const reducer = (state, action) => {
     case 'round':
       return { ...state, round: state.round + 1 };
     case 'extract-button':
-      return { ...state, colors: [...state.colors, action.color] };
+      return { ...state, colors: [...state.colors, action.color], player: {active:false, check:0} };
     case 'switch-player':
-      return { ...state, player: { active: !state.player.active, check: 0 } };
+      return { ...state, player: { ...state.player, active: !state.player.active } };
     case 'player-go-on':
       return { ...state, player: { ...state.player, check: state.player.check + 1 } };
     case 'game-over':
