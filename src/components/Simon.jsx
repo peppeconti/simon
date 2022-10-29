@@ -37,22 +37,26 @@ const Simon = () => {
     {
       color: '#ff0000',
       border: 'TL',
-      id: useId()
+      id: useId(),
+      audio: new Audio(audio_files[0])
     },
     {
       color: '#297fb8',
       border: 'TR',
-      id: useId()
+      id: useId(),
+      audio: new Audio(audio_files[1])
     },
     {
       color: '#27ae61',
       border: 'BL',
-      id: useId()
+      id: useId(),
+      audio: new Audio(audio_files[2])
     },
     {
       color: '#f1c40f',
       border: 'BR',
-      id: useId()
+      id: useId(),
+      audio: new Audio(audio_files[3])
     }
   ];
 
@@ -60,31 +64,33 @@ const Simon = () => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const error = new Audio(audio_files[4]);
+
   const start = () => {
     dispatch({ type: 'round' });
     dispatch({ type: 'create-sequence', element: Math.floor(Math.random() * 4) });
   };
 
-  const checkSequence = (button) => {
+  const checkSequence = (button, audio) => {
     if (state.player.active) {
 
       if (button === state.sequence[state.player.check]) {
 
         if (state.player.check + 1 === state.sequence.length) {
-          new Audio(audio_files[button]).play();
+          audio.play();
           dispatch({ type: 'switch-player' });
           setTimeout(() => {
             dispatch({ type: 'round' });
             dispatch({ type: 'create-sequence', element: Math.floor(Math.random() * 4) });
           }, 700)
         } else {
-          new Audio(audio_files[button]).play();
+          audio.play();
           dispatch({ type: 'player-go-on' });
         }
       } else if (button !== state.sequence[state.player.check]) {
         dispatch({ type: 'game-over' });
         dispatch({ type: 'switch-player' });
-        new Audio(audio_files[4]).play();
+        error.play();
       }
 
     }
@@ -95,10 +101,7 @@ const Simon = () => {
 
     const promises = state.sequence.map((el, i) => {
       return new Promise(res => {
-        setTimeout(() => {
-          res(refs.current[el].animate())
-          new Audio(audio_files[el]).play();
-        }, 1000 * (i + 1))
+        setTimeout(() => res(refs.current[el].animate()), 1000 * (i + 1))
         return res;
       });
     });
@@ -117,7 +120,7 @@ const Simon = () => {
 
   return (
     <div className='board'>
-      {GameButtons.map((e, i) => <GameButton ref={(button) => { refs.current[i] = button }} key={e.id} id={i} color={e.color} border={e.border} player={state.player.active} checkSequence={checkSequence} />)}
+      {GameButtons.map((e, i) => <GameButton ref={(button) => { refs.current[i] = button }} key={e.id} id={i} color={e.color} border={e.border} audio={e.audio} player={state.player.active} checkSequence={checkSequence} />)}
       <Control start={start} round={state.round} gameOver={state.gameOver} />
     </div>
   );

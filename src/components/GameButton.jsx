@@ -2,7 +2,7 @@ import { forwardRef, useImperativeHandle, useState } from 'react';
 import './GameButton.css';
 import { motion } from "framer-motion";
 
-const GameButton = forwardRef(({ border, color, id, player, checkSequence }, ref) => {
+const GameButton = forwardRef(({ border, color, id, audio, player, checkSequence }, ref) => {
 
   const buttonStyles = {
     backgroundColor: color,
@@ -18,7 +18,7 @@ const GameButton = forwardRef(({ border, color, id, player, checkSequence }, ref
   const startAnimation = () => {
     if (player) {
       setAnimation(true);
-      checkSequence(id);
+      checkSequence(id, audio);
     }
   }
 
@@ -29,8 +29,9 @@ const GameButton = forwardRef(({ border, color, id, player, checkSequence }, ref
   useImperativeHandle(ref, () => ({
     animate() {
       setAnimation(true);
+      audio.play()
     }
-  }), []);
+  }), [audio]);
 
   if (animation) {
     return <motion.div
