@@ -1,7 +1,7 @@
 import { useReducer, useRef, useEffect, useId } from 'react';
 import GameButton from './GameButton';
 import Control from './Control';
-import audio_error from '../audio/error.mp3';
+//import { audio_files } from '../audio/audio';
 import './Simon.css';
 
 const initialState = {
@@ -18,8 +18,8 @@ const reducer = (state, action) => {
   switch (action.type) {
     case 'round':
       return { ...state, round: state.round + 1 };
-    case 'extract-button':
-      return { ...state, sequence: [...state.sequence, action.color], player: { active: false, check: 0 } };
+    case 'create-sequence':
+      return { ...state, sequence: [...state.sequence, action.element], player: { active: false, check: 0 } };
     case 'switch-player':
       return { ...state, player: { ...state.player, active: !state.player.active } };
     case 'player-go-on':
@@ -62,12 +62,12 @@ const Simon = () => {
 
   const start = () => {
     dispatch({ type: 'round' });
-    dispatch({ type: 'extract-button', color: Math.floor(Math.random() * 4) });
+    dispatch({ type: 'create-sequence', element: Math.floor(Math.random() * 4) });
   };
 
-  const error = new Audio(audio_error);
+  //const audio = new Audio(audio_files);
 
-  const checkPlayer = (button) => {
+  /*const checkSequence = (button) => {
     if (state.player.active) {
 
       if (button === state.sequence[state.player.check]) {
@@ -85,23 +85,40 @@ const Simon = () => {
       }
 
     }
-  }
+  }*/
+
 
   useEffect(() => {
-    for (let i = 0; i < state.sequence.length; i++) {
-      setTimeout(() => {
-        refs.current[state.sequence[i]].animate();
-        if (i + 1 === state.sequence.length) dispatch({ type: 'switch-player' })
-      }, 1000 * (i + 1));
-    }
-  }, [state.sequence])
+
+    const promises = state.sequence.map((el, i) => {
+      return new Promise(res => {
+        setTimeout(() => res(refs.current[el].animate()), 1000 * (i + 1))
+      });
+    });
+
+    Promise.all(promises).finally(() => {
+      dispatch({type: 'switch-player'})
+    });
+
+
+  }, [state.sequence]);
 
   return (
     <div className='board'>
-      {GameButtons.map((e, i) => <GameButton ref={(button) => { refs.current[i] = button }} key={e.id} id={i} color={e.color} border={e.border} player={state.player.active} checkPlayer={checkPlayer} />)}
+      {GameButtons.map((e, i) => <GameButton ref={(button) => { refs.current[i] = button }} key={e.id} id={i} color={e.color} border={e.border} player={state.player.active} />)}
       <Control start={start} round={state.round} gameOver={state.gameOver} />
     </div>
   );
 }
 
 export default Simon;
+
+
+/*useEffect(() => {
+  for (let i = 0; i < state.sequence.length; i++) {
+    setTimeout(() => {
+      refs.current[state.sequence[i]].animate();
+      if (i + 1 === state.sequence.length) dispatch({ type: 'switch-player' })
+    }, 1000 * (i + 1));
+  }
+}, [state.sequence])*/
