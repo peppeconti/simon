@@ -127,13 +127,3 @@ const Simon = () => {
 }
 
 export default Simon;
-
-
-/*useEffect(() => {
-  for (let i = 0; i < state.sequence.length; i++) {
-    setTimeout(() => {
-      refs.current[state.sequence[i]].animate();
-      if (i + 1 === state.sequence.length) dispatch({ type: 'switch-player' })
-    }, 1000 * (i + 1));
-  }
-}, [state.sequence])*/
