@@ -19,7 +19,7 @@ const reducer = (state, action) => {
     case 'round':
       return { ...state, round: state.round + 1 };
     case 'create-sequence':
-      return { ...state, sequence: [...state.sequence, action.element], player: { active: false, check: 0 } };
+      return { ...state, sequence: [...state.sequence, action.element], player: { ...state.player, check: 0 } };
     case 'switch-player':
       return { ...state, player: { ...state.player, active: !state.player.active } };
     case 'player-go-on':
@@ -72,8 +72,11 @@ const Simon = () => {
 
         if (state.player.check + 1 === state.sequence.length) {
           new Audio(audio_files[button]).play();
-          dispatch({ type: 'round' });
-          dispatch({ type: 'create-sequence', element: Math.floor(Math.random() * 4) });
+          dispatch({ type: 'switch-player' });
+          setTimeout(() => {
+            dispatch({ type: 'round' });
+            dispatch({ type: 'create-sequence', element: Math.floor(Math.random() * 4) });
+          }, 700)
         } else {
           new Audio(audio_files[button]).play();
           dispatch({ type: 'player-go-on' });
@@ -102,8 +105,10 @@ const Simon = () => {
 
     if (promises.length) {
       Promise.allSettled(promises).then((res) => {
-        console.log(res);
-        dispatch({ type: 'switch-player' })
+        setTimeout(() => {
+          console.log(res)
+          dispatch({ type: 'switch-player' });
+        }, 700)
       });
     }
 
