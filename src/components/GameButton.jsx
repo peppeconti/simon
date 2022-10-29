@@ -18,7 +18,7 @@ const GameButton = forwardRef(({ border, color, id, player, checkSequence }, ref
   const startAnimation = () => {
     if (player) {
       setAnimation(true);
-      //checkSequence(id);
+      checkSequence(id);
     }
   }
 

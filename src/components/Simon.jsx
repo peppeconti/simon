@@ -1,7 +1,7 @@
 import { useReducer, useRef, useEffect, useId } from 'react';
 import GameButton from './GameButton';
 import Control from './Control';
-//import { audio_files } from '../audio/audio';
+import { audio_files } from '../audio/audio';
 import './Simon.css';
 
 const initialState = {
@@ -65,47 +65,54 @@ const Simon = () => {
     dispatch({ type: 'create-sequence', element: Math.floor(Math.random() * 4) });
   };
 
-  //const audio = new Audio(audio_files);
-
-  /*const checkSequence = (button) => {
+  const checkSequence = (button) => {
     if (state.player.active) {
 
       if (button === state.sequence[state.player.check]) {
+
         if (state.player.check + 1 === state.sequence.length) {
-          // dispatch({ type: 'switch-player' });
+          new Audio(audio_files[button]).play();
           dispatch({ type: 'round' });
-          dispatch({ type: 'extract-button', color: Math.floor(Math.random() * 4) });
+          dispatch({ type: 'create-sequence', element: Math.floor(Math.random() * 4) });
         } else {
+          new Audio(audio_files[button]).play();
           dispatch({ type: 'player-go-on' });
         }
       } else if (button !== state.sequence[state.player.check]) {
         dispatch({ type: 'game-over' });
         dispatch({ type: 'switch-player' });
-        error.play();
+        new Audio(audio_files[4]).play();
       }
 
     }
-  }*/
+  }
 
 
   useEffect(() => {
 
     const promises = state.sequence.map((el, i) => {
       return new Promise(res => {
-        setTimeout(() => res(refs.current[el].animate()), 1000 * (i + 1))
+        setTimeout(() => {
+          res(refs.current[el].animate())
+          new Audio(audio_files[el]).play();
+        }, 1000 * (i + 1))
+        return res;
       });
     });
 
-    Promise.all(promises).finally(() => {
-      dispatch({type: 'switch-player'})
-    });
+    if (promises.length) {
+      Promise.allSettled(promises).then((res) => {
+        console.log(res);
+        dispatch({ type: 'switch-player' })
+      });
+    }
 
 
   }, [state.sequence]);
 
   return (
     <div className='board'>
-      {GameButtons.map((e, i) => <GameButton ref={(button) => { refs.current[i] = button }} key={e.id} id={i} color={e.color} border={e.border} player={state.player.active} />)}
+      {GameButtons.map((e, i) => <GameButton ref={(button) => { refs.current[i] = button }} key={e.id} id={i} color={e.color} border={e.border} player={state.player.active} checkSequence={checkSequence} />)}
       <Control start={start} round={state.round} gameOver={state.gameOver} />
     </div>
   );
