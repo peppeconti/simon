@@ -1,22 +1,28 @@
 import { useReducer, useRef, useEffect, useId } from 'react';
 import GameButton from './GameButton';
 import Control from './Control';
-// import uuid from 'react-uuid';
+import audio_error from '../audio/error.mp3';
 import './Simon.css';
 
 const initialState = {
-  turn: 0,
-  colors: []
+  round: 0,
+  colors: [],
+  player: false,
+  gameOver: false
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'turn':
-      return { ...state, turn: state.turn + 1 };
+    case 'round':
+      return { ...state, round: state.round + 1 };
     case 'extract-button':
       return { ...state, colors: [...state.colors, action.color] };
+    case 'switch-player':
+      return { ...state, player: !state.player };
+    case 'game-over':
+      return { ...state, gameOver: true };
     default:
-      return state
+      return state;
   }
 };
 
@@ -50,9 +56,13 @@ const Simon = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const start = () => {
-    dispatch({ type: 'turn' });
+    dispatch({ type: 'round' });
     dispatch({ type: 'extract-button', color: Math.floor(Math.random() * 4) });
   };
+
+  const checkPlayer = () => {
+
+  }
 
   useEffect(() => {
     state.colors.forEach((el, i) => {
@@ -60,14 +70,13 @@ const Simon = () => {
         refs.current[el].animate(el);
       }, 1000 * (i + 1));
     })
+    dispatch({ type: 'switch-player' });
   }, [state.colors])
-
-
 
   return (
     <div className='board'>
-      {GameButtons.map((e, i) => <GameButton ref={(button) => {refs.current[i] = button}}  key={e.id} id={i} color={e.color} border={e.border} />)}
-      <Control start={start} turn={state.turn} />
+      {GameButtons.map((e, i) => <GameButton ref={(button) => { refs.current[i] = button }} key={e.id} id={i} color={e.color} border={e.border} player={state.player} />)}
+      <Control start={start} round={state.round} />
     </div>
   );
 }

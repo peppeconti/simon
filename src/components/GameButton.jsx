@@ -3,7 +3,7 @@ import './GameButton.css';
 import { motion } from "framer-motion";
 import { audio_files } from '../audio/audio';
 
-const GameButton = forwardRef(({ border, color, id }, ref) => {
+const GameButton = forwardRef(({ border, color, id, player }, ref) => {
 
   const buttonStyles = {
     backgroundColor: color,
@@ -14,13 +14,15 @@ const GameButton = forwardRef(({ border, color, id }, ref) => {
     borderBottom: `${border === 'TL' || border === 'TR' ? '.5rem solid #fff' : 'none'}`,
   };
 
-  const audio = useMemo(() => new Audio(audio_files[id]),[id])
+  const audio = useMemo(() => new Audio(audio_files[id]), [id])
 
   const [animation, setAnimation] = useState(false);
 
   const startAnimation = () => {
-    setAnimation(true);
-    audio.play();
+    if (player) {
+      setAnimation(true);
+      audio.play();
+    }
   }
 
   const resetAnimation = () => {
