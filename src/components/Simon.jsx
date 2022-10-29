@@ -6,7 +6,7 @@ import './Simon.css';
 
 const initialState = {
   round: 0,
-  colors: [],
+  sequence: [],
   player: {
     active: false,
     check: 0
@@ -19,7 +19,7 @@ const reducer = (state, action) => {
     case 'round':
       return { ...state, round: state.round + 1 };
     case 'extract-button':
-      return { ...state, colors: [...state.colors, action.color], player: {active:false, check:0} };
+      return { ...state, sequence: [...state.sequence, action.color], player: { active: false, check: 0 } };
     case 'switch-player':
       return { ...state, player: { ...state.player, active: !state.player.active } };
     case 'player-go-on':
@@ -70,15 +70,15 @@ const Simon = () => {
   const checkPlayer = (button) => {
     if (state.player.active) {
 
-      if (button === state.colors[state.player.check]) {
-        if (state.player.check + 1 === state.colors.length) {
-          dispatch({ type: 'switch-player' });
+      if (button === state.sequence[state.player.check]) {
+        if (state.player.check + 1 === state.sequence.length) {
+          // dispatch({ type: 'switch-player' });
           dispatch({ type: 'round' });
           dispatch({ type: 'extract-button', color: Math.floor(Math.random() * 4) });
         } else {
           dispatch({ type: 'player-go-on' });
         }
-      } else if (button !== state.colors[state.player.check]) {
+      } else if (button !== state.sequence[state.player.check]) {
         dispatch({ type: 'game-over' });
         dispatch({ type: 'switch-player' });
         error.play();
@@ -88,13 +88,12 @@ const Simon = () => {
   }
 
   useEffect(() => {
-    state.colors.forEach((el, i) => {
+    for (let i = 0; i < state.sequence.length + 1; i++) {
       setTimeout(() => {
-        refs.current[el].animate(el);
+        i < state.sequence.length ? refs.current[state.sequence[i]].animate() : dispatch({ type: 'switch-player' });
       }, 1000 * (i + 1));
-    })
-    dispatch({ type: 'switch-player' });
-  }, [state.colors])
+    }
+  }, [state.sequence])
 
   return (
     <div className='board'>

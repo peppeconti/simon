@@ -31,10 +31,9 @@ const GameButton = forwardRef(({ border, color, id, player, checkPlayer }, ref) 
   }
 
   useImperativeHandle(ref, () => ({
-    animate(el) {
+    animate() {
       setAnimation(true);
       audio.play();
-      console.log(el)
     }
   }), [audio]);
 
