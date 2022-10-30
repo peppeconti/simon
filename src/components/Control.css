@@ -26,10 +26,24 @@
   justify-content: center;
   cursor: pointer;
   animation: blinker 1.25s infinite;
+  /*overflow: hidden;*/
 }
 
 .control .game {
   animation: none;
+}
+
+.round__wrap {
+  height: 200%;
+  padding: 0 .5rem;
+}
+
+.round__count {
+  padding: inherit;
+  display: flex;
+  align-items: center;
+  height: 50%;
+  background-color: red;
 }
 
 @keyframes blinker {
