@@ -8,7 +8,7 @@
     left: 0;
     height: 100vh;
     width: 100vw;
-    opacity: .6;
+    opacity: .4;
     background: black;
 }
 
@@ -27,6 +27,6 @@
     font-style: italic;
 }
 
-.winner p {
+.message p {
     padding: .5rem 0;
 }
