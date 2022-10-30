@@ -1,0 +1,32 @@
+.back {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    opacity: .6;
+    background: black;
+}
+
+.message {
+    position: fixed;
+    z-index: 20;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: auto;
+    width: 100%;
+    color: #fff;
+    text-align: center;
+    font-size: 6rem;
+    font-family: 'Odibee Sans', cursive;
+    font-style: italic;
+}
+
+.winner p {
+    padding: .5rem 0;
+}

@@ -1,6 +1,7 @@
 import { useReducer, useRef, useEffect, useId } from 'react';
 import GameButton from './GameButton';
 import Control from './Control';
+import Modal from './Modal';
 import { audio_files } from '../audio/audio';
 import './Simon.css';
 
@@ -122,6 +123,7 @@ const Simon = () => {
     <div className='board'>
       {GameButtons.map((e, i) => <GameButton ref={(button) => { refs.current[i] = button }} key={e.id} id={i} color={e.color} border={e.border} audio={e.audio} player={state.player.active} checkSequence={checkSequence} />)}
       <Control start={start} round={state.round} gameOver={state.gameOver} />
+      {state.gameOver && <Modal round={state.round} />}
     </div>
   );
 }
