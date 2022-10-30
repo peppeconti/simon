@@ -32,7 +32,6 @@
 .control .game {
   animation: none;
   position: relative;
-  border: 2px solid white
 }
 
 .round__wrap {
