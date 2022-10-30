@@ -27,6 +27,8 @@ const reducer = (state, action) => {
       return { ...state, player: { ...state.player, check: state.player.check + 1 } };
     case 'game-over':
       return { ...state, gameOver: true };
+    case 'reset':
+      return initialState;
     default:
       return state;
   }
@@ -123,7 +125,7 @@ const Simon = () => {
     <div className='board'>
       {GameButtons.map((e, i) => <GameButton ref={(button) => { refs.current[i] = button }} key={e.id} id={i} color={e.color} border={e.border} audio={e.audio} player={state.player.active} checkSequence={checkSequence} />)}
       <Control start={start} round={state.round} gameOver={state.gameOver} />
-      {state.gameOver && <Modal round={state.round} />}
+      {state.gameOver && <Modal round={state.round} dispatch={dispatch} />}
     </div>
   );
 }
