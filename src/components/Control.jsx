@@ -8,9 +8,7 @@ const Control = ({ start, round, gameOver }) => {
 
   let button;
 
-  if (gameOver) {
-    button = <h2 className='game'>Game<br/>Over</h2>
-  } else if (round === 0) {
+  if (round === 0) {
     button = <h2 className='start' onClick={startGame}>START</h2>
   } else if (round !== 0) {
     button = <h2 className='game'>Round {round}</h2>
