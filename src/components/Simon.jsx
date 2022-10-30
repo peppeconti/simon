@@ -1,4 +1,4 @@
-import { useReducer, useRef, useEffect, useId } from 'react';
+import { useReducer, useRef, useEffect, useId, useState } from 'react';
 import GameButton from './GameButton';
 import Control from './Control';
 import Modal from './Modal';
@@ -63,11 +63,14 @@ const Simon = () => {
     }
   ];
 
-  const refs = useRef([])
+  const refs = useRef([]);
+
+  const [slide, setSlide] = useState('round__wrap');
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const error = new Audio(audio_files[4]);
+  const error_sound = new Audio(audio_files[4]);
+  const slide_sound = new Audio(audio_files[5]);
 
   const start = () => {
     dispatch({ type: 'round' });
@@ -83,9 +86,9 @@ const Simon = () => {
           audio.play();
           dispatch({ type: 'switch-player' });
           setTimeout(() => {
-            dispatch({ type: 'round' });
-            dispatch({ type: 'create-sequence', element: Math.floor(Math.random() * 4) });
-          }, 700)
+            setSlide('round__wrap down');
+            slide_sound.play();
+          }, 700);
         } else {
           audio.play();
           dispatch({ type: 'player-go-on' });
@@ -93,7 +96,7 @@ const Simon = () => {
       } else if (button !== state.sequence[state.player.check]) {
         dispatch({ type: 'game-over' });
         dispatch({ type: 'switch-player' });
-        error.play();
+        error_sound.play();
       }
 
     }
@@ -124,7 +127,7 @@ const Simon = () => {
   return (
     <div className='board'>
       {GameButtons.map((e, i) => <GameButton ref={(button) => { refs.current[i] = button }} key={e.id} id={i} color={e.color} border={e.border} audio={e.audio} player={state.player.active} checkSequence={checkSequence} />)}
-      <Control start={start} round={state.round} gameOver={state.gameOver} />
+      <Control start={start} round={state.round} gameOver={state.gameOver} slide={slide} setSlide={setSlide} dispatch={dispatch} />
       {state.gameOver && <Modal round={state.round} dispatch={dispatch} />}
     </div>
   );

@@ -26,16 +26,18 @@
   justify-content: center;
   cursor: pointer;
   animation: blinker 1.25s infinite;
-  /*overflow: hidden;*/
+  overflow: hidden;
 }
 
 .control .game {
   animation: none;
+  position: relative;
+  border: 2px solid white
 }
 
 .round__wrap {
   height: 200%;
-  padding: 0 .5rem;
+  transform: translateY(-25%);
 }
 
 .round__count {
@@ -43,7 +45,11 @@
   display: flex;
   align-items: center;
   height: 50%;
-  background-color: red;
+}
+
+.down {
+  transform: translateY(25%);
+  transition: 1s;
 }
 
 @keyframes blinker {
