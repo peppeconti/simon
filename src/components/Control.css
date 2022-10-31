@@ -56,3 +56,21 @@
     color: transparent;
   }
 }
+
+@media screen and (max-width: 414px) {
+  .control h2 {
+    font-size: 2.5rem;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .control h2 {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 280px) {
+  .control h2 {
+    font-size: 1.5rem;
+  }
+}
