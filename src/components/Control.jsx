@@ -2,11 +2,11 @@ import './Control.css';
 
 const Control = ({ start, round, slide, setSlide, dispatch }) => {
 
-  const startGame = () => {
+  const startHandler = () => {
     start();
   }
 
-  const setNextRound = () => {
+  const nextRoundHandler = () => {
     setSlide('round__wrap');
     dispatch({ type: 'new-round', element: Math.floor(Math.random() * 4) });
   }
@@ -14,10 +14,10 @@ const Control = ({ start, round, slide, setSlide, dispatch }) => {
   let button;
 
   if (round === 0) {
-    button = <h2 className='start' onClick={startGame}>START</h2>
+    button = <h2 className='start' onClick={startHandler}>START</h2>
   } else if (round !== 0) {
     button = <h2 className='game'>Round&#160;
-      <span className={slide} onTransitionEnd={setNextRound}>
+      <span className={slide} onTransitionEnd={nextRoundHandler}>
         <span className='round__count'>{round + 1}</span>
         <span className='round__count'>{round}</span>
       </span>
