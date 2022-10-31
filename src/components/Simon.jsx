@@ -17,10 +17,8 @@ const initialState = {
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'round':
-      return { ...state, round: state.round + 1 };
-    case 'create-sequence':
-      return { ...state, sequence: [...state.sequence, action.element], player: { ...state.player, check: 0 } };
+    case 'new-round':
+      return { ...state, round: state.round + 1, sequence: [...state.sequence, action.element], player: { ...state.player, check: 0 } };
     case 'switch-player':
       return { ...state, player: { ...state.player, active: !state.player.active } };
     case 'player-go-on':
@@ -73,8 +71,7 @@ const Simon = () => {
   const slide_sound = new Audio(audio_files[5]);
 
   const start = () => {
-    dispatch({ type: 'round' });
-    dispatch({ type: 'create-sequence', element: Math.floor(Math.random() * 4) });
+    dispatch({ type: 'new-round', element: Math.floor(Math.random() * 4) });
   };
 
   const checkSequence = (button, audio) => {

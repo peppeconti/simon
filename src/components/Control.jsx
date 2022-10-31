@@ -8,8 +8,7 @@ const Control = ({ start, round, slide, setSlide, dispatch }) => {
 
   const setNextRound = () => {
     setSlide('round__wrap');
-    dispatch({ type: 'round' });
-    dispatch({ type: 'create-sequence', element: Math.floor(Math.random() * 4) });
+    dispatch({ type: 'new-round', element: Math.floor(Math.random() * 4) });
   }
 
   let button;
