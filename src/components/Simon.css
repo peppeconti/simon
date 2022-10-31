@@ -3,10 +3,19 @@
     height: 70vh;
     max-width: 80vw;
     max-height: 80vw;
+    min-height: 450px;
+    min-width: 450px;
     border-radius: 600px;
     display: grid;
     padding: 1rem;
     grid-template-columns: repeat(2, 1fr);
     caret-color: transparent;
     position: relative;
+}
+
+@media screen and (max-width: 414px) {
+    .board {
+        min-height: auto;
+        min-width: auto;
+    }
 }
