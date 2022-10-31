@@ -8,10 +8,7 @@ import './Simon.css';
 const initialState = {
   round: 0,
   sequence: [],
-  player: {
-    active: false,
-    check: 0
-  },
+  player: false,
   gameOver: false
 };
 
@@ -20,14 +17,12 @@ const error_sound = new Audio(audio_files[4]);
 const reducer = (state, action) => {
   switch (action.type) {
     case 'new-round':
-      return { ...state, round: state.round + 1, sequence: [...state.sequence, action.element], player: { ...state.player, check: 0 } };
+      return { ...state, round: state.round + 1, sequence: [...state.sequence, action.element] };
     case 'switch-player':
-      return { ...state, player: { ...state.player, active: !state.player.active } };
-    case 'player-go-on':
-      return { ...state, player: { ...state.player, check: state.player.check + 1 } };
+      return { ...state, player: !state.player };
     case 'game-over':
       error_sound.play();
-      return { ...state, gameOver: true, player: { ...state.player, active: false } };
+      return { ...state, gameOver: true, player: false };
     case 'reset':
       return initialState;
     default:
@@ -68,6 +63,8 @@ const Simon = () => {
 
   const [slide, setSlide] = useState('round__wrap');
 
+  const sequenceRef = useRef();
+
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const slide_sound = new Audio(audio_files[5]);
@@ -76,12 +73,12 @@ const Simon = () => {
     dispatch({ type: 'new-round', element: Math.floor(Math.random() * 4) });
   };
 
-  const checkSequence = (button, audio) => {
-    if (state.player.active) {
+  const checkSequence = (sequenceEl, audio) => {
+    if (state.player) {
 
-      if (button === state.sequence[state.player.check]) {
+      if (sequenceEl === sequenceRef.current[0]) {
 
-        if (state.player.check + 1 === state.sequence.length) {
+        if (sequenceRef.current.length === 1) {
           audio.play();
           dispatch({ type: 'switch-player' });
           setTimeout(() => {
@@ -90,7 +87,7 @@ const Simon = () => {
           }, 700);
         } else {
           audio.play();
-          dispatch({ type: 'player-go-on' });
+          sequenceRef.current.shift();
         }
 
       } else {
@@ -114,12 +111,12 @@ const Simon = () => {
     });
 
     if (promises.length) {
-      Promise.allSettled(promises).then((res) => {
-        setTimeout(() => {
-          console.log(res)
+      Promise.allSettled(promises)
+        .then(res => res.map(el => el.value))
+        .then(sequence => sequenceRef.current = sequence)
+        .then(() => setTimeout(() => {
           dispatch({ type: 'switch-player' });
-        }, 700)
-      });
+        }, 700));
     }
 
 
@@ -127,7 +124,7 @@ const Simon = () => {
 
   return (
     <div className='board'>
-      {GameButtons.map((e, i) => <GameButton ref={(button) => { refs.current[i] = button }} key={e.id} id={i} color={e.color} border={e.border} audio={e.audio} player={state.player.active} checkSequence={checkSequence} />)}
+      {GameButtons.map((e, i) => <GameButton ref={(button) => { refs.current[i] = button }} key={e.id} id={i} color={e.color} border={e.border} audio={e.audio} player={state.player} checkSequence={checkSequence} />)}
       <Control start={start} round={state.round} gameOver={state.gameOver} slide={slide} setSlide={setSlide} dispatch={dispatch} />
       {state.gameOver && <Modal round={state.round} dispatch={dispatch} />}
     </div>
