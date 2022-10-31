@@ -15,6 +15,8 @@ const initialState = {
   gameOver: false
 };
 
+const error_sound = new Audio(audio_files[4]);
+
 const reducer = (state, action) => {
   switch (action.type) {
     case 'new-round':
@@ -24,7 +26,8 @@ const reducer = (state, action) => {
     case 'player-go-on':
       return { ...state, player: { ...state.player, check: state.player.check + 1 } };
     case 'game-over':
-      return { ...state, gameOver: true };
+      error_sound.play();
+      return { ...state, gameOver: true, player: { ...state.player, active: false } };
     case 'reset':
       return initialState;
     default:
@@ -67,7 +70,6 @@ const Simon = () => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const error_sound = new Audio(audio_files[4]);
   const slide_sound = new Audio(audio_files[5]);
 
   const start = () => {
@@ -90,10 +92,9 @@ const Simon = () => {
           audio.play();
           dispatch({ type: 'player-go-on' });
         }
-      } else if (button !== state.sequence[state.player.check]) {
+
+      } else {
         dispatch({ type: 'game-over' });
-        dispatch({ type: 'switch-player' });
-        error_sound.play();
       }
 
     }
@@ -104,7 +105,10 @@ const Simon = () => {
 
     const promises = state.sequence.map((el, i) => {
       return new Promise(res => {
-        setTimeout(() => res(refs.current[el].animate()), 1000 * (i + 1))
+        setTimeout(() => {
+          refs.current[el].animate();
+          res(el);
+        }, 1000 * (i + 1))
         return res;
       });
     });
