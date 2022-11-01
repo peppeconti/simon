@@ -25,6 +25,7 @@
     font-style: italic;
     color: #ececec;
     text-shadow: 5px 8px 7px rgba(2, 2, 2, .9);
+    caret-color: transparent;
 }
 
 .game__over {
