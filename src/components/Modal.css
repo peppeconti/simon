@@ -8,8 +8,6 @@
     left: 0;
     height: 100vh;
     width: 100vw;
-    opacity: .4;
-    background: black;
 }
 
 .message {
@@ -17,16 +15,26 @@
     z-index: 20;
     top: 50%;
     left: 50%;
+    width: 50%;
     transform: translate(-50%, -50%);
-    height: auto;
-    width: 100%;
-    color: #fff;
+    padding: 4rem 2rem;
+    background-color: rgba(255, 255, 255);
+    color: #2d2d2d;
     text-align: center;
     font-size: 6rem;
+    border-radius: 2rem;
     font-family: 'Odibee Sans', cursive;
     font-style: italic;
 }
 
 .message p {
-    padding: .5rem 0;
+    padding: 1rem 0;
+}
+
+.game__over {
+    font-size: 7rem;
+}
+
+.round__completed {
+    font-size: 3rem;
 }

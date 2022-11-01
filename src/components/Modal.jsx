@@ -12,8 +12,8 @@ const Message = ({ round }) => {
 
     return (
         <div className='message'>
-            <p>Game Over!</p>
-            <p>Level completed: {round - 1}</p>
+            <p className='game__over'>Game Over!</p>
+            <p className='round__completed'>Level completed: {round - 1}</p>
         </div>
     );
 };
