@@ -33,7 +33,6 @@
     top: 0;
     right: 0;
     padding: 1rem;
-    font-size: 4rem;
     color: #ececec;
     caret-color: transparent;
     background-color: transparent;
@@ -44,6 +43,10 @@
 
 .reset:hover {
     opacity: .8!important;
+}
+
+.reset .fa {
+    font-size: 2.5rem;
 }
 
 .game__over {

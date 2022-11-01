@@ -25,7 +25,9 @@ const ResetButton = ({ dispatch }) => {
             transition={{ duration: .3, delay: .5 }}
             onClick={() => dispatch({ type: 'reset' })}
 
-        >X</motion.button>
+        >
+            <span className='fa fa-arrow-left' />
+        </motion.button>
     );
 };
 
