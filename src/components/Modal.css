@@ -16,9 +16,8 @@
     z-index: 20;
     top: 50%;
     left: 50%;
-    width: 100%;
+    width: 100vw;
     transform: translate(-50%, -50%);
-    padding: 4rem 2rem;
     text-align: center;
     font-size: 6rem;
     border-radius: 2rem;
@@ -37,3 +36,33 @@
     font-size: 3.5rem;
     padding: .25rem 0;
 }
+
+@media screen and (max-width: 550px) {
+    .game__over {
+        font-size: 6rem;
+    }
+    
+    .round__completed {
+        font-size: 2.5rem;
+    }
+  }
+  
+  @media screen and (max-width: 375px) {
+    .game__over {
+        font-size: 5rem;
+    }
+    
+    .round__completed {
+        font-size: 2.5rem;
+    }
+  }
+  
+  @media screen and (max-width: 320px) {
+    .game__over {
+        font-size: 4rem;
+    }
+    
+    .round__completed {
+        font-size: 2rem;
+    }
+  }

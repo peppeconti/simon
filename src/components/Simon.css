@@ -3,8 +3,8 @@
     height: 70vh;
     max-width: 80vw;
     max-height: 80vw;
-    min-height: 450px;
-    min-width: 450px;
+    min-height: 400px;
+    min-width: 400px;
     border-radius: 600px;
     display: grid;
     padding: 1rem;
@@ -17,5 +17,12 @@
     .board {
         min-height: auto;
         min-width: auto;
+    }
+}
+
+@media screen and (max-width: 280px) {
+    .board {
+        min-height: 200px;
+        min-width: 200px;
     }
 }
