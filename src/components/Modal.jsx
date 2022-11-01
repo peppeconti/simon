@@ -3,16 +3,29 @@ import ReactDOM from 'react-dom';
 import { motion } from 'framer-motion';
 import './Modal.css';
 
-const Backdrop = ({ dispatch }) => {
+const Backdrop = () => {
     return (
         <motion.div
             className='back'
-            onClick={() => dispatch({ type: 'reset' })}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.5, delay: .5 }}
 
         />
+    );
+};
+
+const ResetButton = ({ dispatch }) => {
+    return (
+        <motion.button
+            type='button'
+            className='reset'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: .3, delay: .5 }}
+            onClick={() => dispatch({ type: 'reset' })}
+
+        >X</motion.button>
     );
 };
 
@@ -42,8 +55,9 @@ const Modal = ({ round, dispatch }) => {
 
     return (
         <Fragment>
-            {ReactDOM.createPortal(<Backdrop dispatch={dispatch} />, portalElement)}
+            {ReactDOM.createPortal(<Backdrop />, portalElement)}
             {ReactDOM.createPortal(<Message round={round} />, portalElement)}
+            {ReactDOM.createPortal(<ResetButton dispatch={dispatch} />, portalElement)}
         </Fragment>
     );
 };
