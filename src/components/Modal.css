@@ -8,6 +8,7 @@
     left: 0;
     height: 100vh;
     width: 100vw;
+    background-color: rgba(56, 56, 56, 0.2);
 }
 
 .message {
@@ -15,26 +16,24 @@
     z-index: 20;
     top: 50%;
     left: 50%;
-    width: 50%;
+    width: 100%;
     transform: translate(-50%, -50%);
     padding: 4rem 2rem;
-    background-color: rgba(255, 255, 255);
-    color: #2d2d2d;
     text-align: center;
     font-size: 6rem;
     border-radius: 2rem;
     font-family: 'Odibee Sans', cursive;
     font-style: italic;
-}
-
-.message p {
-    padding: 1rem 0;
+    color: #ececec;
+    text-shadow: 5px 8px 7px rgba(2, 2, 2, .9);
 }
 
 .game__over {
-    font-size: 7rem;
+    font-size: 8rem;
+    padding: .25rem 0;
 }
 
 .round__completed {
-    font-size: 3rem;
+    font-size: 3.5rem;
+    padding: .25rem 0;
 }
