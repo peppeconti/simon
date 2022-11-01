@@ -15,6 +15,8 @@
 
 @media screen and (max-width: 414px) {
     .board {
+        max-width: 90vw;
+        max-height: 90vw;
         min-height: auto;
         min-width: auto;
     }
