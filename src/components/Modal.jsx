@@ -10,7 +10,7 @@ const Backdrop = ({ dispatch }) => {
             onClick={() => dispatch({ type: 'reset' })}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1.5 }}
+            transition={{ duration: 1.5, delay: .5 }}
 
         />
     );
@@ -24,13 +24,13 @@ const Message = ({ round }) => {
                 className='game__over'
                 initial={{ y: '30%', scale: .5, opacity: 0 }}
                 animate={{ y: 1, scale: 1, opacity: 1 }}
-                transition={{ duration: .2, ease: 'easeOut', delay: 1.5 }}
+                transition={{ duration: .3, ease: 'easeOut', delay: .5 }}
             >Game Over!</motion.p>
             <motion.p
                 className='round__completed'
                 initial={{ y: '30%', scale: .5, opacity: 0 }}
                 animate={{ y: 1, scale: 1, opacity: 1 }}
-                transition={{ duration: .2, ease: 'easeOut', delay: 1.75 }}
+                transition={{ duration: .3, ease: 'easeOut', delay: .75 }}
             >Level completed: {round - 1}</motion.p>
         </div>
     );
