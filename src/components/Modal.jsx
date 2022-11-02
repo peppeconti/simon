@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { faReplyAll } from '@fortawesome/free-solid-svg-icons'
 import { motion } from 'framer-motion';
 import './Modal.css';
 
@@ -28,7 +28,7 @@ const ResetButton = ({ dispatch }) => {
             onClick={() => dispatch({ type: 'reset' })}
 
         >
-            <FontAwesomeIcon icon={faArrowLeft} size='2x' />
+            <FontAwesomeIcon icon={faReplyAll} size='2x' />
         </motion.button>
     );
 };
