@@ -12,8 +12,6 @@ const initialState = {
   gameOver: false
 };
 
-const error_sound = new Audio(audio_files[4]);
-
 const reducer = (state, action) => {
   switch (action.type) {
     case 'new-round':
@@ -21,7 +19,6 @@ const reducer = (state, action) => {
     case 'switch-player':
       return { ...state, player: !state.player };
     case 'game-over':
-      error_sound.play();
       return { ...state, gameOver: true, player: false };
     case 'reset':
       return initialState;
@@ -68,6 +65,7 @@ const Simon = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const slide_sound = new Audio(audio_files[5]);
+  const error_sound = new Audio(audio_files[4]);
 
   const start = () => {
     dispatch({ type: 'new-round', element: Math.floor(Math.random() * 4) });
@@ -91,6 +89,7 @@ const Simon = () => {
         }
 
       } else {
+        error_sound.play();
         dispatch({ type: 'game-over' });
       }
 
