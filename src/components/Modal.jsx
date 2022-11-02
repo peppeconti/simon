@@ -1,5 +1,7 @@
 import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import { motion } from 'framer-motion';
 import './Modal.css';
 
@@ -26,7 +28,7 @@ const ResetButton = ({ dispatch }) => {
             onClick={() => dispatch({ type: 'reset' })}
 
         >
-            <span className='fa fa-arrow-left' />
+            <FontAwesomeIcon icon='coffee' />
         </motion.button>
     );
 };
